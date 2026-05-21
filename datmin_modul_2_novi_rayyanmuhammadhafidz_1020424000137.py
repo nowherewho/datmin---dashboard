@@ -1,26 +1,40 @@
-KeyError: This app has encountered an error. The original error message is redacted to prevent data leaks. Full error details have been recorded in the logs (if you're on Streamlit Cloud, click on 'Manage app' in the lower right of your app).
-Traceback:
-File "/mount/src/datmin---dashboard/datmin_modul_2_novi_rayyanmuhammadhafidz_1020424000137.py", line 83, in <module>
-    df_fixed = df.apply(fix_health_data, axis=1)
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/frame.py", line 12435, in apply
-    return op.apply().__finalize__(self, method="apply")
-           ~~~~~~~~^^
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/apply.py", line 1015, in apply
-    return self.apply_standard()
-           ~~~~~~~~~~~~~~~~~~~^^
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/apply.py", line 1167, in apply_standard
-    results, res_index = self.apply_series_generator()
-                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/apply.py", line 1183, in apply_series_generator
-    results[i] = self.func(v, *self.args, **self.kwargs)
-                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-File "/mount/src/datmin---dashboard/datmin_modul_2_novi_rayyanmuhammadhafidz_1020424000137.py", line 58, in fix_health_data
-    if row['HbA1c'] > 20:
-       ~~~^^^^^^^^^
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/series.py", line 959, in __getitem__
-    return self._get_value(key)
-           ~~~~~~~~~~~~~~~^^^^^
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/series.py", line 1046, in _get_value
-    loc = self.index.get_loc(label)
-File "/home/adminuser/venv/lib/python3.14/site-packages/pandas/core/indexes/base.py", line 3648, in get_loc
-    raise KeyError(key) from err
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+st.set_page_config(page_title="Dashboard Data Mining Jantung", layout="wide")
+
+st.title("📊 Dashboard Analisis Data Pasien Penyakit Jantung")
+st.write("Aplikasi ini menampilkan ringkasan data hasil praktikum Data Mining.")
+
+@st.cache_data
+def load_data():
+    return pd.read_csv('Data Pasien Penyakit Jantung.csv')
+
+try:
+    df = load_data()
+    
+    st.subheader("📋 5 Data Pertama")
+    st.dataframe(df.head())
+    
+    st.subheader("ℹ️ Informasi Dataset")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write(f"**Total Baris:** {df.shape[0]}")
+        st.write(f"**Total Kolom:** {df.shape[1]}")
+    with col2:
+        st.write(f"**Data Kosong:** {df.isnull().sum().sum()} kolom kosong")
+        st.write(f"**Data Duplikat:** {df.duplicated().sum()} baris")
+
+    st.subheader("🔥 Heatmap Korelasi Fitur")
+    numeric_df = df.select_dtypes(include=['float64', 'int64'])
+    if not numeric_df.empty:
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.heatmap(numeric_df.corr(), annot=True, fmt=".2f", cmap='RdYlGn', ax=ax)
+        st.pyplot(fig)
+    else:
+        st.write("Tidak ada kolom numerik untuk korelasi.")
+
+except Exception as e:
+    st.error(f"Gagal memuat dataset: {e}")
