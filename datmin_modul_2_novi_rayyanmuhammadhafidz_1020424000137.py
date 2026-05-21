@@ -26,7 +26,7 @@ df.head()
 
 df.info()
 
-print(df['BMI'].value_counts())
+#print(df['BMI'].value_counts())
 
 df.describe()
 
