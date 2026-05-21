@@ -446,7 +446,7 @@ elif page == "Klasifikasi Outcome (Naive Bayes)":
 
 print("File app.py berhasil dibuat.")
 
-!pip install pyngrok
+
 from pyngrok import ngrok
 import subprocess
 import time
