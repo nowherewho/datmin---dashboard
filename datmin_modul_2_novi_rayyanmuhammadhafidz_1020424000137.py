@@ -20,7 +20,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-df = pd.read_csv('Diabetes_dataset_2026_ver3.csv')
+df = pd.read_csv('venv/Data Pasien Penyakit Jantung.csv')
 #df = pd.read_csv( '/content/drive/MyDrive/Colab Notebooks/Diabetes_dataset_2026_ver3.csv', sep=';')
 df.head()
 
