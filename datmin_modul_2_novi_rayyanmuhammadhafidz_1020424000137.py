@@ -7,8 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1wWIxA21MsGTS8yDL5gCWKGLbcGR2JYZX
 """
 
-from google.colab import drive
-drive.mount('/content/drive')
+#from google.colab import drive
+#drive.mount('/content/drive')
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -20,7 +20,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-df = pd.read_csv( '/content/drive/MyDrive/Colab Notebooks/Diabetes_dataset_2026_ver3.csv', sep=';')
+df = pd.read_csv('Diabetes_dataset_2026_ver3.csv')
+#df = pd.read_csv( '/content/drive/MyDrive/Colab Notebooks/Diabetes_dataset_2026_ver3.csv', sep=';')
 df.head()
 
 df.info()
