@@ -373,7 +373,7 @@ print("Konfirmasi: Seluruh model dan scaler telah berhasil disimpan di folder:")
 # %%bash
 # pip install -q streamlit
 
-!pip install streamlit
+
 import streamlit as st
 import pickle
 import numpy as np
